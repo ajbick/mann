@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	//"math"
 	"time"
 	"strconv"
 )
@@ -196,8 +195,6 @@ func main() {
 	fmt.Scanln(&max)
 
 	s := makeRandomSliceInt(n, max)
-	//s := []int{0, 1, 1, 5, 6, 6, 6, 7, 10, 12, 14, 14, 15, 15, 17, 17, 20, 21, 21, 21}
-	//fmt.Println(s)
 
 	quicksort(s)
 	printSliceInt(s, 40)	
