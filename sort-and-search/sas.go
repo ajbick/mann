@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	//"math"
 	"time"
 	"strconv"
 )
@@ -167,6 +168,54 @@ func linearSearch(slice []int, target int) (index, numTests int) {
 	return -1, len(slice)
 }
 
+func binarySearch(slice []int, target int) (index, numTests int) {
+	l := 0
+	r := len(slice)
+	nt := 0
+
+	for l < r {
+		m := (l + r) / 2
+		nt++
+		if slice[m] < target {
+			l = m + 1
+		} else if slice[m] > target {
+			r = m - 1
+		} else {
+			return m, nt
+		}
+	}
+
+	return -1, nt
+}
+
+func main() {
+	var n, max, t int
+	fmt.Printf("# Items: ")
+	fmt.Scanln(&n)
+	fmt.Printf("Max: ")
+	fmt.Scanln(&max)
+
+	s := makeRandomSliceInt(n, max)
+	//s := []int{0, 1, 1, 5, 6, 6, 6, 7, 10, 12, 14, 14, 15, 15, 17, 17, 20, 21, 21, 21}
+	//fmt.Println(s)
+
+	quicksort(s)
+	printSliceInt(s, 40)	
+
+	//var t int
+	fmt.Printf("Target: ")
+	fmt.Scanln(&t)
+
+	index, tests := binarySearch(s, t)
+	if index > 0 {
+		fmt.Println("slice[" + strconv.Itoa(index) + "] = " + strconv.Itoa(t) + ", " + strconv.Itoa(tests) + " tests.")
+	} else {
+		fmt.Println("Not found.")
+	}
+}
+	
+/*
+// linear search
 func main() {
 	var n, max, t int
 	fmt.Printf("# Items: ")
