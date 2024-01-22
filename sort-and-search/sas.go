@@ -25,27 +25,29 @@ func printSlice(slice []int, numItems int) {
 	fmt.Println(slice[:max])
 }
 
-func checkSorted(slice []int) bool {
+func checkSorted(slice []int) {
 	sz := len(slice)
 	for i := 1; i < sz; i++ {
 		if slice[i-1] > slice[i] {
-			//fmt.Println("The slice is NOT sorted!")
-			return false
+			fmt.Println("The slice is NOT sorted!")
+			//return false
 		}
 	}
-	//fmt.Println("The slice is sorted.")
-	return true
+	fmt.Println("The slice is sorted.")
+	//return true
 }
 
 func bubbleSort(slice []int) {
-	for i := 1; i < len(slice); i++ {
-		if slice[i-1] > slice[i] {
-			slice[i-1], slice[i] = slice[i], slice[i-1]
+	for iter := 0; iter < len(slice); iter++ {
+		for i := 1; i < len(slice)-iter; i++ {
+			if slice[i-1] > slice[i] {
+				slice[i-1], slice[i] = slice[i], slice[i-1]
+			}
 		}
 	}
-	if !checkSorted(slice) {
-		bubbleSort(slice)
-	}
+	//if !checkSorted(slice) {
+	//	bubbleSort(slice)
+	//}
 }
 
 func main() {
