@@ -158,6 +158,33 @@ func countingSortInt(slice []int, max int) []int {
 	return sorted
 }
 
+func linearSearch(slice []int, target int) (index, numTests int) {
+	for i, x := range slice {
+		if x == target {
+			return i, i
+		}
+	}
+	return -1, len(slice)
+}
+
+func main() {
+	var n, max, t int
+	fmt.Printf("# Items: ")
+	fmt.Scanln(&n)
+	fmt.Printf("Max: ")
+	fmt.Scanln(&max)
+
+	s := makeRandomSliceInt(n, max)
+
+	fmt.Println(s)
+
+	fmt.Printf("Target: ")
+	fmt.Scanln(&t)
+
+	fmt.Println(linearSearch(s, t))
+}
+
+/*
 // counting sort
 func main() {
     // Get the number of items and maximum item value.
