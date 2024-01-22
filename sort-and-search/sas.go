@@ -4,9 +4,24 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"strconv"
 )
 
-func makeRandomSlice(numItems, max int) []int {
+type Customer struct {
+    id           string
+    numPurchases int
+}
+
+func makeRandomSlice(numItems, max int) []Customer {
+	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
+	s := make([]Customer, numItems)
+	for i := 0; i < numItems; i++ {
+		s[i] = Customer{"C"+strconv.Itoa(i), rnd.Intn(max)}
+	}
+	return s
+}
+
+func makeRandomSliceInt(numItems, max int) []int {
 	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	s := make([]int, numItems)
 	for i := 0; i < numItems; i++ {
@@ -15,7 +30,7 @@ func makeRandomSlice(numItems, max int) []int {
 	return s
 }
 
-func printSlice(slice []int, numItems int) {
+func printSlice(slice []Customer, numItems int) {
 	max := 0
 	if len(slice) > numItems {
 		max = numItems
@@ -25,11 +40,33 @@ func printSlice(slice []int, numItems int) {
 	fmt.Println(slice[:max])
 }
 
-func checkSorted(slice []int) {
+func printSliceInt(slice []int, numItems int) {
+	max := 0
+	if len(slice) > numItems {
+		max = numItems
+	} else {
+		max = len(slice)
+	}
+	fmt.Println(slice[:max])
+}
+
+func checkSorted(slice []Customer) {
+	sz := len(slice)
+	for i := 1; i < sz; i++ {
+		if slice[i-1].numPurchases > slice[i].numPurchases {
+			fmt.Println("The slice is NOT sorted!")
+			return
+		}
+	}
+	fmt.Println("The slice is sorted.")
+}
+
+func checkSortedInt(slice []int) {
 	sz := len(slice)
 	for i := 1; i < sz; i++ {
 		if slice[i-1] > slice[i] {
 			fmt.Println("The slice is NOT sorted!")
+			return
 		}
 	}
 	fmt.Println("The slice is sorted.")
@@ -77,6 +114,71 @@ func quicksort(slice []int) {
 	quicksort(slice[p+1:])
 }
 
+func countingSort(slice []Customer, max int) []Customer {
+	counts := make([]int, len(slice))
+
+	for i := 0; i < len(slice); i++ {
+		counts[slice[i].numPurchases]++
+	}
+
+	for i := 1; i < len(slice); i++ {
+		counts[i] += counts[i-1]
+	}
+
+	sorted := make([]Customer, len(slice))
+	for i := len(slice)-1; i >= 0; i-- {
+		x := slice[i]
+		y := counts[x.numPurchases]
+		sorted[y-1] = x
+		counts[x.numPurchases]--
+	}
+
+	return sorted
+}
+
+func countingSortInt(slice []int, max int) []int {
+	counts := make([]int, len(slice))
+
+	for i := 0; i < len(slice); i++ {
+		counts[slice[i]]++
+	}
+
+	for i := 1; i < len(slice); i++ {
+		counts[i] += counts[i-1]
+	}
+
+	sorted := make([]int, len(slice))
+	for i := len(slice)-1; i >= 0; i-- {
+		x := slice[i]
+		y := counts[x]
+		sorted[y-1] = x
+		counts[x]--
+	}
+
+	return sorted
+}
+
+// counting sort
+func main() {
+    // Get the number of items and maximum item value.
+    var numItems, max int;
+    fmt.Printf("# Items: ")
+    fmt.Scanln(&numItems)
+    fmt.Printf("Max: ")
+    fmt.Scanln(&max)
+
+    // Make and display the unsorted slice.
+    slice := makeRandomSlice(numItems, max)
+    printSlice(slice, 40)
+    fmt.Println()
+
+    // Sort and display the result.
+    sorted := countingSort(slice, max)
+    printSlice(sorted, 40)
+
+    // Verify that it's sorted.
+    checkSorted(sorted)
+}
 
 /*
 // bubble sort
@@ -102,7 +204,8 @@ func main() {
 }
 */   
 
-
+/*
+// quick sort
 func main() {
     // Get the number of items and maximum item value.
     var numItems, max int;
@@ -123,4 +226,5 @@ func main() {
     // Verify that it's sorted.
     checkSorted(slice)
 }
+*/
 
