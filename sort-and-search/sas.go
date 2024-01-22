@@ -170,10 +170,10 @@ func linearSearch(slice []int, target int) (index, numTests int) {
 
 func binarySearch(slice []int, target int) (index, numTests int) {
 	l := 0
-	r := len(slice)
+	r := len(slice)-1
 	nt := 0
 
-	for l < r {
+	for l <= r {
 		m := (l + r) / 2
 		nt++
 		if slice[m] < target {
@@ -189,7 +189,7 @@ func binarySearch(slice []int, target int) (index, numTests int) {
 }
 
 func main() {
-	var n, max, t int
+	var n, max int
 	fmt.Printf("# Items: ")
 	fmt.Scanln(&n)
 	fmt.Printf("Max: ")
@@ -202,15 +202,23 @@ func main() {
 	quicksort(s)
 	printSliceInt(s, 40)	
 
-	//var t int
+	var tt string
 	fmt.Printf("Target: ")
-	fmt.Scanln(&t)
+	fmt.Scanln(&tt)
+	for tt != "q" {
+		t, err := strconv.Atoi(tt)
 
-	index, tests := binarySearch(s, t)
-	if index > 0 {
-		fmt.Println("slice[" + strconv.Itoa(index) + "] = " + strconv.Itoa(t) + ", " + strconv.Itoa(tests) + " tests.")
-	} else {
-		fmt.Println("Not found.")
+		if err == nil {
+			index, tests := binarySearch(s, t)
+			if index > 0 {
+				fmt.Println("slice[" + strconv.Itoa(index) + "] = " + strconv.Itoa(t) + ", " + strconv.Itoa(tests) + " tests.")
+			} else {
+				fmt.Println("Not found.")
+			}
+		}
+
+		fmt.Printf("Target: ")
+		fmt.Scanln(&tt)
 	}
 }
 	
