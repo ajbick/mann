@@ -3,20 +3,20 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"time"
 	"strconv"
+	"time"
 )
 
 type Customer struct {
-    id           string
-    numPurchases int
+	id           string
+	numPurchases int
 }
 
 func makeRandomSlice(numItems, max int) []Customer {
 	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	s := make([]Customer, numItems)
 	for i := 0; i < numItems; i++ {
-		s[i] = Customer{"C"+strconv.Itoa(i), rnd.Intn(max)}
+		s[i] = Customer{"C" + strconv.Itoa(i), rnd.Intn(max)}
 	}
 	return s
 }
@@ -84,8 +84,8 @@ func bubbleSort(slice []int) {
 
 func partition(slice []int) int {
 	lo := 0
-	hi := len(slice)-1
-	
+	hi := len(slice) - 1
+
 	pivot := slice[hi]
 
 	i := lo - 1
@@ -107,7 +107,7 @@ func quicksort(slice []int) {
 	if len(slice) < 2 {
 		return
 	}
-	
+
 	p := partition(slice)
 
 	quicksort(slice[0:p])
@@ -126,7 +126,7 @@ func countingSort(slice []Customer, max int) []Customer {
 	}
 
 	sorted := make([]Customer, len(slice))
-	for i := len(slice)-1; i >= 0; i-- {
+	for i := len(slice) - 1; i >= 0; i-- {
 		x := slice[i]
 		y := counts[x.numPurchases]
 		sorted[y-1] = x
@@ -148,7 +148,7 @@ func countingSortInt(slice []int, max int) []int {
 	}
 
 	sorted := make([]int, len(slice))
-	for i := len(slice)-1; i >= 0; i-- {
+	for i := len(slice) - 1; i >= 0; i-- {
 		x := slice[i]
 		y := counts[x]
 		sorted[y-1] = x
@@ -169,7 +169,7 @@ func linearSearch(slice []int, target int) (index, numTests int) {
 
 func binarySearch(slice []int, target int) (index, numTests int) {
 	l := 0
-	r := len(slice)-1
+	r := len(slice) - 1
 	nt := 0
 
 	for l <= r {
@@ -197,7 +197,7 @@ func main() {
 	s := makeRandomSliceInt(n, max)
 
 	quicksort(s)
-	printSliceInt(s, 40)	
+	printSliceInt(s, 40)
 
 	var tt string
 	fmt.Printf("Target: ")
@@ -218,7 +218,7 @@ func main() {
 		fmt.Scanln(&tt)
 	}
 }
-	
+
 /*
 // linear search
 func main() {
@@ -283,7 +283,7 @@ func main() {
     // Verify that it's sorted.
     checkSorted(slice)
 }
-*/   
+*/
 
 /*
 // quick sort
@@ -308,4 +308,3 @@ func main() {
     checkSorted(slice)
 }
 */
-
