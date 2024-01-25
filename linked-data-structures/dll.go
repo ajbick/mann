@@ -88,7 +88,7 @@ func (list *DoublyLinkedList) length() int {
 }
 
 func (list *DoublyLinkedList) isEmpty() bool {
-	return list.topSentinel == list.bottomSentinel
+	return list.topSentinel.next == list.bottomSentinel
 }
 
 func (stack *DoublyLinkedList) push(value string) {
@@ -104,6 +104,74 @@ func (stack *DoublyLinkedList) pop() string {
 	return c.data
 }
 
+// queue
+func (queue *DoublyLinkedList) enqueue(value string) {
+	queue.push(value)
+}
+
+func (queue *DoublyLinkedList) dequeue() string {
+	if queue.isEmpty() {
+		panic("Stack is empty.")
+	}
+	c := queue.bottomSentinel.prev.delete()
+	return c.data
+}
+
+// deque
+func (deque *DoublyLinkedList) pushBottom(value string) {
+	c := Cell{value, nil, nil}
+	deque.bottomSentinel.addBefore(&c)
+}
+
+func (deque *DoublyLinkedList) pushTop(value string) {
+	deque.push(value)
+}
+
+func (deque *DoublyLinkedList) popBottom() string {
+	if deque.isEmpty() {
+		panic("Stack is empty.")
+	}
+	return deque.dequeue()
+}
+
+func (deque *DoublyLinkedList) popTop() string {
+	if deque.isEmpty() {
+		panic("Stack is empty.")
+	}
+	return deque.pop()
+}
+
 func main() {
-	
+    // Test queue functions.
+    fmt.Printf("*** Queue Functions ***\n")
+    queue := makeDoublyLinkedList()
+    queue.enqueue("Agate")
+    queue.enqueue("Beryl")
+    fmt.Printf("%s ", queue.dequeue())
+    queue.enqueue("Citrine")
+    fmt.Printf("%s ", queue.dequeue())
+    fmt.Printf("%s ", queue.dequeue())
+    queue.enqueue("Diamond")
+    queue.enqueue("Emerald")
+    for !queue.isEmpty() {
+        fmt.Printf("%s ", queue.dequeue())
+    }
+    fmt.Printf("\n\n")
+
+    // Test deque functions. Names starting
+    // with F have a fast pass.
+    fmt.Printf("*** Deque Functions ***\n")
+    deque := makeDoublyLinkedList()
+    deque.pushTop("Ann")
+    deque.pushTop("Ben")
+    fmt.Printf("%s ", deque.popBottom())
+    deque.pushBottom("F-Cat")
+    fmt.Printf("%s ", deque.popBottom())
+    fmt.Printf("%s ", deque.popBottom())
+    deque.pushBottom("F-Dan")
+    deque.pushTop("Eva")
+    for !deque.isEmpty() {
+        fmt.Printf("%s ", deque.popBottom())
+    }
+    fmt.Printf("\n")
 }
