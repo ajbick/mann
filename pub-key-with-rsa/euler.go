@@ -77,6 +77,8 @@ func sieveToPrimes(sieve []bool) []int {
 }
 
 func main() {
+	fmt.Println("Eratosthenes:")
 	printSieve(sieveOfEratosthenes(100))
+	fmt.Println("Euler:")
 	printSieve(sieveOfEuler(100))
 }
